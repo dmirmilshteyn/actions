@@ -9,6 +9,7 @@ async function main() {
         const directory = core.getInput("directory")
         const key = core.getInput("key")
         const inventory = core.getInput("inventory")
+        const inventoryFile = core.getInput("inventory_file")
         const vaultPassword = core.getInput("vault_password")
         const options = core.getInput("options")
 
@@ -32,9 +33,14 @@ async function main() {
         }
 
         if (inventory) {
-            const inventoryFile = ".ansible_inventory"
-            fs.writeFileSync(inventoryFile, inventory, { mode: 0600 })
-            core.saveState("inventoryFile", inventoryFile)
+            const generatedInventoryFile = ".ansible_inventory"
+            fs.writeFileSync(generatedInventoryFile, inventory, { mode: 0600 })
+            core.saveState("generatedInventoryFile", generatedInventoryFile)
+            cmd.push("--inventory-file")
+            cmd.push(generatedInventoryFile)
+        }
+
+        if (inventoryFile) {
             cmd.push("--inventory-file")
             cmd.push(inventoryFile)
         }

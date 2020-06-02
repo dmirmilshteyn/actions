@@ -16,6 +16,9 @@ inputs:
   inventory:
     description: Custom content to write into hosts
     required: false
+  inventory_file:
+    description: Path to inventory filepath
+    required: false
   vault_password:
     description: The password used for decrypting vaulted files
     required: false

@@ -22,7 +22,7 @@ jobs:
       - name: Test remote
         uses: ./ansible-playbook/
         with:
-          playbook: ansible-playbook/playbook.yml
+          playbook: playbook.yml
           directory: ansible-playbook/test
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
@@ -44,8 +44,8 @@ jobs:
         uses: ./ansible-playbook/
         with:
           playbook: ansible-playbook/playbook.yml
+          inventory_file: ansible-playbook/hosts
           options: |
-            --inventory ansible-playbook/hosts  
             --limit local  
   test-local-more:
     runs-on: ubuntu-latest
