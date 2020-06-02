@@ -23,7 +23,7 @@ jobs:
         uses: ./ansible-playbook/
         with:
           playbook: ansible-playbook/playbook.yml
-          directory: test
+          directory: ansible-playbook/test
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
             [all]
