@@ -64,7 +64,7 @@ async function main() {
     try {
         const directory = core.getState("directory")
         const keyFile = core.getState("keyFile")
-        const inventoryFile = core.getState("inventoryFile")
+        const generatedInventoryFile = core.getState("generatedInventoryFile")
         const vaultPasswordFile = core.getState("vaultPasswordFile")
 
         if (directory)
@@ -73,8 +73,8 @@ async function main() {
         if (keyFile)
             rm(keyFile)
 
-        if (inventoryFile)
-            rm(inventoryFile)
+        if (generatedInventoryFile)
+            rm(generatedInventoryFile)
 
         if (vaultPasswordFile)
             rm(vaultPasswordFile)
