@@ -1,0 +1,28 @@
+name: Run Ansible playbook
+description: Execute Ansible playbook on selected hosts
+branding:
+  color: red
+  icon: play
+inputs:
+  playbook:
+    description: Ansible playbook filepath
+    required: true
+  directory:
+    description: Root directory of Ansible project (defaults to current)
+    required: false
+  key:
+    description: SSH private key used to connect to the host
+    required: false
+  inventory:
+    description: Custom content to write into hosts
+    required: false
+  vault_password:
+    description: The password used for decrypting vaulted files
+    required: false
+  options:
+    description: Extra options that should be passed to ansible-playbook command
+    required: false
+runs:
+  using: node12
+  main: dist/main/index.js
+  post: dist/main/index.js

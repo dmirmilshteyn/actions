@@ -1,0 +1,65 @@
+name: Ansible Playbook Test
+
+on: push
+
+jobs:
+  test-remote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup remote
+        run: |
+          echo "${{secrets.SSH_PUBLIC_KEY}}" | sudo tee /etc/ssh/authorized_keys
+          sudo tee /etc/ssh/sshd_config <<EOF
+            PasswordAuthentication no
+            PubkeyAuthentication yes
+            AuthorizedKeysFile /etc/ssh/authorized_keys
+            PermitRootLogin no
+            Subsystem sftp /usr/lib/openssh/sftp-server
+          EOF
+          sudo systemctl restart sshd
+      - name: Test remote
+        uses: ./ansible-playbook/
+        with:
+          playbook: playbook.yml
+          directory: test
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          inventory: |
+            [all]
+            localhost
+          options: |
+            -e docker_image=docker_url
+            -e docker_username=${{github.actor}}
+            -e docker_password=${{github.token}}
+            -e db_name=db_name
+            -e db_user=db_user
+            -e db_pass=db_pass
+  test-local:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Test local
+        uses: ./ansible-playbook/
+        with:
+          playbook: playbook.yml
+          options: |
+            --inventory hosts  
+            --limit local  
+  test-local-more:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Test local
+        uses: ./ansible-playbook
+        with:
+          playbook: playbook.yml
+          vault_password: test
+          inventory: |
+            [all]
+            localhost ansible_connection=local
+          options: |
+            -e key1=val1
+            -e key2=val2

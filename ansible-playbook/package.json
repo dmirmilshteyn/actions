@@ -1,0 +1,14 @@
+{
+  "name": "action-ansible-playbook",
+  "main": "main.js",
+  "scripts": {
+    "build": "ncc build main.js -o dist/main && ncc build post.js -o dist/post"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.3",
+    "@actions/exec": "^1.0.4"
+  },
+  "devDependencies": {
+    "@zeit/ncc": "^0.22.3"
+  }
+}
