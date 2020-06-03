@@ -1,0 +1,9 @@
+name: 'Template Directory'
+description: 'Applies templating to all files in a directory.'
+inputs:
+  directory: 
+    description: 'The directory to template.'
+    required: true
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
