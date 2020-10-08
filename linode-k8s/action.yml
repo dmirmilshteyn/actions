@@ -10,7 +10,9 @@ inputs:
 runs:
   using: "composite"
   steps: 
-    - run: pip install wheel linode-cli
+    - run: pip install wheel
+      shell: bash
+    - run: pip install linode-cli
       shell: bash
     - run: mkdir -p ~/.kube
       shell: bash
