@@ -17,6 +17,7 @@ runs:
     - run: |
         pip install linode-cli
         echo "~/.local/bin" >> $GITHUB_PATH
+      shell: bash
     - run: linode-cli lke kubeconfig-view ${{ inputs.cluster-id }} > ~/.kube/config
       shell: bash
       env:
