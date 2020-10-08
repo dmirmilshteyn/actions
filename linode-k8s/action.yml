@@ -12,11 +12,11 @@ runs:
   steps: 
     - run: pip install wheel
       shell: bash
-    - run: pip install linode-cli
-      shell: bash
     - run: mkdir -p ~/.kube
       shell: bash
-    - run: linode-cli lke kubeconfig-view ${{ inputs.cluster-id }} > ~/.kube/config
+    - run: |
+        pip install linode-cli
+        linode-cli lke kubeconfig-view ${{ inputs.cluster-id }} > ~/.kube/config
       shell: bash
       env:
         LINODE_CLI_TOKEN: ${{ inputs.token }}
