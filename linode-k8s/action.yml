@@ -1,0 +1,20 @@
+name: 'Linode Kubernetes Setup'
+description: 'Setup kubectl for use on Linode.'
+inputs:
+  token:
+    description: 'Linode Access Token'
+    required: true
+  cluster-id:
+    description: 'Linode Cluster Id'
+    required: true
+runs:
+  using: "composite"
+  steps: 
+    - run: pip install linode-cli
+      shell: bash
+    - run: mkdir -p ~/.kube
+      shell: bash
+    - run: linode-cli lke kubeconfig-view ${{ inputs.cluster-id }} > ~/.kube/config
+      shell: bash
+      env:
+        LINODE_CLI_TOKEN: ${{ inputs.token }}
